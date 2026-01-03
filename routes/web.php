@@ -24,9 +24,7 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 // Guest Routes
 Route::middleware(['auth', 'role:Guest'])->group(function () {
-    Route::get('/guest/jobs', function () {
-        return view('guest.jobs');
-    })->name('guest.jobs');
+    Route::get('/guest/jobs', [JobController::class, 'index'])->name('guest.jobs');
 
     Route::get('/guest/apply', [PelamarController::class, 'create'])->name('guest.apply');
     Route::post('/guest/apply', [PelamarController::class, 'store'])->name('pelamar.store');
@@ -42,6 +40,7 @@ Route::middleware(['auth', 'role:Staff'])->group(function () {
 // Admin Routes
 Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::resource('/admin/jobs', JobController::class, ['as' => 'admin']);
     Route::resource('/admin/pelamar', PelamarController::class, ['as' => 'admin']);
 });
 
