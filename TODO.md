@@ -1,20 +1,16 @@
-# TODO: Simple Job Application System (Lowongan Kerja Sederhana)
+# TODO: Implement ADMIN Role for Laravel Job Portal
 
 ## Completed Tasks
-- [ ] Create TODO.md file
+- [x] Analyze project structure and gather information
+- [x] Create implementation plan
+- [x] Get user approval for plan
 
 ## Pending Tasks
-- [ ] Add 'role' field to users table via migration (enum: Admin, Staff, Guest)
-- [ ] Create Pelamar model with relationships
-- [ ] Implement authentication system (login, register, logout) with controllers and views
-- [ ] Create role-based middleware
-- [ ] Create PelamarController with CRUD operations, including file upload for CV, validation, pagination, search, filter
-- [ ] Create views for Guest: Public job listings, application form
-- [ ] Create views for Staff: List of applications with card-style display, manage statuses
-- [ ] Create views for Admin: Full CRUD with table display, badges for status
-- [ ] Update routes with middleware protection
-- [ ] Seed database with sample users and data
-- [ ] Ensure dashboard remains unchanged (admin only)
-- [ ] Run migrations and seeders
-- [ ] Test authentication and role access
-- [ ] Verify file uploads and validations
+- [ ] Implement RoleMiddleware for RBAC
+- [ ] Update Job model with fillable attributes
+- [ ] Update Pelamar model with fillable attributes
+- [ ] Create App\Http\Controllers\Admin\DashboardController
+- [ ] Create App\Http\Controllers\Admin\LowonganController (CRUD jobs)
+- [ ] Create App\Http\Controllers\Admin\LamaranController (view/show/delete applications)
+- [ ] Create App\Http\Controllers\Admin\UserController (manage staff)
+- [ ] Update routes/web.php with admin prefix and middleware
