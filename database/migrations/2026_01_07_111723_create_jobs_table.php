@@ -14,14 +14,17 @@ return new class extends Migration
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('company_name');
+            $table->text('description');
             $table->string('location');
-            $table->enum('work_system', ['remote', 'on-site']);
-            $table->enum('job_type', ['full-time', 'part-time', 'internship']);
-            $table->string('salary_range');
-            $table->string('category');
-            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->decimal('salary', 10, 2)->nullable();
+            $table->enum('type', ['Full-time', 'Part-time', 'Contract'])->default('Full-time');
+            $table->date('deadline');
+            $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('category_id');
             $table->timestamps();
+
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

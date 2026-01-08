@@ -40,6 +40,41 @@
                 </ul>
                 <ul class="navbar-nav">
                     @auth
+                        @if(auth()->user()->role === 'Admin')
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-bell"></i>
+                                    @php
+                                        $unreadCount = \App\Models\Notification::where('user_id', auth()->id())->where('is_read', false)->count();
+                                    @endphp
+                                    @if($unreadCount > 0)
+                                        <span class="badge bg-danger">{{ $unreadCount }}</span>
+                                    @endif
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" style="min-width: 300px;">
+                                    <li><h6 class="dropdown-header">Notifications</h6></li>
+                                    @php
+                                        $recentNotifications = \App\Models\Notification::with('pelamar')
+                                            ->where('user_id', auth()->id())
+                                            ->orderBy('created_at', 'desc')
+                                            ->limit(5)
+                                            ->get();
+                                    @endphp
+                                    @forelse($recentNotifications as $notification)
+                                        <li>
+                                            <a class="dropdown-item {{ $notification->is_read ? '' : 'fw-bold' }}" href="{{ route('admin.notifications') }}">
+                                                <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small><br>
+                                                {{ Str::limit($notification->title, 40) }}
+                                            </a>
+                                        </li>
+                                    @empty
+                                        <li><span class="dropdown-item-text">No notifications</span></li>
+                                    @endforelse
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-center" href="{{ route('admin.notifications') }}">View All Notifications</a></li>
+                                </ul>
+                            </li>
+                        @endif
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
                                 {{ auth()->user()->name }} ({{ auth()->user()->role }})

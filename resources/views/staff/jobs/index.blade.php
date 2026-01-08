@@ -5,7 +5,7 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
-                <h1 class="h3 mb-0 text-gray-800">Staff Dashboard - Job Management</h1>
+                <h1 class="h3 mb-0 text-gray-800">My Jobs</h1>
                 <a href="{{ route('staff.jobs.create') }}" class="btn btn-primary">
                     <i class="fas fa-plus-circle me-2"></i>Add New Job
                 </a>
@@ -18,7 +18,7 @@
         <div class="col-12">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <form method="GET" action="{{ route('staff.dashboard') }}" class="row g-3">
+                    <form method="GET" action="{{ route('staff.jobs.index') }}" class="row g-3">
                         <div class="col-md-4">
                             <input type="text" name="search" class="form-control" placeholder="Search by job title, company..." value="{{ request('search') }}">
                         </div>
@@ -41,7 +41,7 @@
                         </div>
                         <div class="col-md-2">
                             <button type="submit" class="btn btn-outline-primary me-2">Filter</button>
-                            <a href="{{ route('staff.dashboard') }}" class="btn btn-outline-secondary">Reset</a>
+                            <a href="{{ route('staff.jobs.index') }}" class="btn btn-outline-secondary">Reset</a>
                         </div>
                     </form>
                 </div>
@@ -51,7 +51,7 @@
 
     <!-- Jobs Cards -->
     <div class="row">
-        @forelse($jobs ?? [] as $job)
+        @forelse($jobs as $job)
         <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
             <div class="card h-100 shadow-sm border-0">
                 <div class="card-body d-flex flex-column">
@@ -81,9 +81,21 @@
                             <span class="text-primary fw-bold">
                                 ${{ number_format($job->salary, 0) }}
                             </span>
-                            <a href="{{ route('staff.jobs.edit', $job) }}" class="btn btn-outline-primary btn-sm">
-                                <i class="fas fa-edit me-1"></i>Edit
-                            </a>
+                            <div class="btn-group" role="group">
+                                <a href="{{ route('staff.jobs.show', $job) }}" class="btn btn-outline-info btn-sm">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{{ route('staff.jobs.edit', $job) }}" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form method="POST" action="{{ route('staff.jobs.destroy', $job) }}" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure?')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -106,7 +118,7 @@
     </div>
 
     <!-- Pagination -->
-    @if(isset($jobs) && $jobs->hasPages())
+    @if($jobs->hasPages())
     <div class="row">
         <div class="col-12">
             <div class="d-flex justify-content-center">

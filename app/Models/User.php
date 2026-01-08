@@ -24,6 +24,16 @@ class User extends Authenticatable
         'role',
     ];
 
+    public function jobs()
+    {
+        return $this->hasMany(Job::class, 'created_by');
+    }
+
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

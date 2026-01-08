@@ -10,10 +10,25 @@ class JobController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $jobs = Job::where('status', 'active')->get();
-        return view('guest.jobs', compact('jobs'));
+        $query = Job::with('category')->where('status', 'active');
+
+        // Search functionality
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where('title', 'like', '%' . $search . '%');
+        }
+
+        // Filter by category
+        if ($request->has('category_id') && !empty($request->category_id)) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        $jobs = $query->paginate(6);
+        $categories = \App\Models\Category::all();
+
+        return view('guest.jobs', compact('jobs', 'categories'));
     }
 
     /**

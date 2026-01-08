@@ -9,6 +9,14 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        return view('staff.dashboard');
+    }
+
+    /**
+     * Admin dashboard
+     */
+    public function adminDashboard()
+    {
         return view('admin.dashboard');
     }
 

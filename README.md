@@ -1,59 +1,255 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Lowongan Kerja Sederhana - Job Application System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistem aplikasi lowongan kerja berbasis web yang dibangun dengan Laravel 11, menyediakan platform untuk mengelola lowongan kerja, aplikasi pelamar, dan manajemen pengguna dengan role-based access control.
 
-## About Laravel
+## 🚀 Fitur Utama
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Role-based Access Control**: Admin, Staff, dan Guest dengan hak akses berbeda
+- **Job Management**: CRUD lowongan kerja dengan kategori dan status
+- **Applicant Management**: Sistem aplikasi dan review pelamar
+- **Public Job Listings**: Halaman publik untuk mencari dan melamar pekerjaan
+- **File Upload**: Upload CV dalam format PDF
+- **Search & Filter**: Pencarian dan filter berdasarkan kategori
+- **Responsive Design**: UI modern dengan Bootstrap 5
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📋 Persyaratan Sistem
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP 8.1 atau lebih tinggi
+- Composer
+- Node.js & NPM
+- MySQL atau database lainnya yang didukung Laravel
+- Web server (Apache/Nginx) atau Laravel development server
 
-## Learning Laravel
+## 🛠️ Instalasi dan Setup
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### 1. Clone Repository
+```bash
+git clone <repository-url>
+cd LowonganKerjaSederhana
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 2. Install Dependencies
+```bash
+composer install
+npm install
+```
 
-## Laravel Sponsors
+### 3. Environment Configuration
+```bash
+cp .env.example .env
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Edit file `.env` dan konfigurasikan database connection:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=lowongan_kerja
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
 
-### Premium Partners
+### 4. Generate Application Key
+```bash
+php artisan key:generate
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 5. Database Setup
+```bash
+php artisan migrate
+php artisan db:seed
+```
 
-## Contributing
+### 6. Build Assets
+```bash
+npm run build
+# atau untuk development
+npm run dev
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 7. Storage Link (untuk file upload)
+```bash
+php artisan storage:link
+```
 
-## Code of Conduct
+### 8. Jalankan Aplikasi
+```bash
+php artisan serve
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Aplikasi akan berjalan di `http://localhost:8000`
 
-## Security Vulnerabilities
+## 👥 User Roles dan Login Credentials
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Setelah menjalankan `php artisan db:seed`, sistem akan membuat user default untuk setiap role:
 
-## License
+### 🔐 Admin User
+- **Email**: admin@example.com
+- **Password**: password
+- **Role**: Admin (Full access)
+- **Dashboard**: `/admin/*` routes
+- **Capabilities**:
+  - Manage jobs (CRUD)
+  - Manage categories (CRUD)
+  - Manage applicants (CRUD)
+  - View all system data
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 👨‍💼 Staff User
+- **Email**: staff@example.com
+- **Password**: password
+- **Role**: Staff
+- **Dashboard**: `/staff/dashboard`
+- **Capabilities**:
+  - View job listings
+  - Review and update applicant status
+  - View applicant details
+
+### 👤 Guest User
+- **Email**: guest@example.com
+- **Password**: password
+- **Role**: Guest
+- **Dashboard**: `/guest/jobs`
+- **Capabilities**:
+  - View public job listings
+  - Search and filter jobs
+  - Apply for jobs (with CV upload)
+  - Register new account
+
+## 📊 Database Seeding
+
+Seeder akan membuat:
+- 3 user default (Admin, Staff, Guest)
+- 10 kategori pekerjaan
+- 20 lowongan kerja sample
+- 15 data pelamar sample
+
+```bash
+php artisan db:seed
+```
+
+Untuk seed specific seeder:
+```bash
+php artisan db:seed --class=JobSeeder
+php artisan db:seed --class=PelamarSeeder
+```
+
+## 🗂️ Struktur Routes
+
+### Public Routes
+- `/` - Landing page
+- `/login` - Login page
+- `/register` - Registration page
+- `/guest/jobs` - Public job listings
+
+### Guest Routes (Authenticated)
+- `/guest/jobs` - Job listings with search/filter
+- `/guest/apply` - Job application form
+
+### Staff Routes
+- `/staff/dashboard` - Job listings dashboard
+- `/staff/pelamar/{id}` - Applicant details
+
+### Admin Routes
+- `/admin/jobs` - Job management (CRUD)
+- `/admin/categories` - Category management (CRUD)
+- `/admin/pelamar` - Applicant management (CRUD)
+
+## 🎨 UI/UX Features
+
+- **Responsive Design**: Mobile-friendly dengan Bootstrap 5
+- **Modern Cards**: Job listings dalam format card dengan hover effects
+- **Search & Filter**: Real-time search dan filter berdasarkan kategori
+- **Modal Forms**: Application forms dalam modal dialog
+- **Status Badges**: Visual status indicators
+- **File Upload**: Drag & drop CV upload dengan validation
+
+## 🔧 Development Commands
+
+```bash
+# Jalankan server development
+php artisan serve
+
+# Jalankan queue worker (jika ada)
+php artisan queue:work
+
+# Clear cache
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+
+# Generate IDE helper
+php artisan ide-helper:generate
+
+# Run tests
+php artisan test
+```
+
+## 📁 File Structure
+
+```
+├── app/
+│   ├── Http/Controllers/
+│   │   ├── Admin/
+│   │   │   └── AdminJobController.php
+│   │   ├── Auth/
+│   │   ├── DashboardController.php
+│   │   ├── JobController.php
+│   │   └── PelamarController.php
+│   ├── Models/
+│   │   ├── Job.php
+│   │   ├── Category.php
+│   │   ├── Pelamar.php
+│   │   └── User.php
+│   └── Middleware/
+│       └── RoleMiddleware.php
+├── database/
+│   ├── migrations/
+│   ├── seeders/
+│   │   ├── DatabaseSeeder.php
+│   │   ├── JobSeeder.php
+│   │   └── PelamarSeeder.php
+├── resources/views/
+│   ├── admin/
+│   ├── staff/
+│   ├── guest/
+│   ├── auth/
+│   └── layouts/
+├── routes/
+│   └── web.php
+└── storage/app/public/cv_files/
+```
+
+## 🐛 Troubleshooting
+
+### Common Issues:
+
+1. **File Upload Not Working**
+   ```bash
+   php artisan storage:link
+   chmod -R 755 storage/
+   ```
+
+2. **Permission Issues**
+   ```bash
+   chown -R www-data:www-data storage/
+   chown -R www-data:www-data bootstrap/cache/
+   ```
+
+3. **Database Connection Error**
+   - Pastikan database credentials di `.env` benar
+   - Jalankan `php artisan migrate` jika belum
+
+4. **Assets Not Loading**
+   ```bash
+   npm run build
+   php artisan cache:clear
+   ```
+
+## 📞 Support
+
+Untuk pertanyaan atau issues, silakan buat issue di repository atau hubungi tim development.
+
+## 📄 License
+
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
